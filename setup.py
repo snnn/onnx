@@ -168,8 +168,7 @@ class cmake_build(setuptools.Command):
                     # we need to link with libpython on windows, so
                     # passing python version to window in order to
                     # find python in cmake
-                    '-DPY_VERSION={}'.format('{0}.{1}'.format(*sys.version_info[:2])),
-                    '-DONNX_USE_MSVC_STATIC_RUNTIME=ON',
+                    '-DPY_VERSION={}'.format('{0}.{1}'.format(*sys.version_info[:2]))
                 ])
                 if 8 * struct.calcsize("P") == 64:
                     # Temp fix for CI
@@ -188,7 +187,7 @@ class cmake_build(setuptools.Command):
             cmake_args.append(TOP_DIR)
             subprocess.check_call(cmake_args)
 
-            build_args = [CMAKE, '--build', os.curdir]
+            build_args = [CMAKE, '--build', os.curdir,'--config','Release']
             if WINDOWS:
                 build_args.extend(['--', '/maxcpucount:{}'.format(self.jobs)])
             else:
